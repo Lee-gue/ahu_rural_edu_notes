@@ -92,12 +92,19 @@
         }
         
         .carousel-scroll-item {
-            height: 192px;
+            height: 150px;
             width: auto;
-            min-width: 256px;
+            min-width: 200px;
             object-fit: cover;
             border-radius: 8px;
             flex-shrink: 0;
+        }
+        
+        @media (min-width: 640px) {
+            .carousel-scroll-item {
+                height: 192px;
+                min-width: 256px;
+            }
         }
         
         @keyframes scrollLeft {
@@ -271,58 +278,58 @@
                     <i class="fas fa-heart text-warm-orange mr-2"></i>
                     安徽大学学生发展支持项目
                 </div>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                <h1 class="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
                     安大乡村教育笔记
                 </h1>
-                <p class="text-xl sm:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+                <p class="text-lg sm:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed">
                     守望乡野，共育希望
                 </p>
-                <p class="text-lg text-white/80 max-w-2xl mx-auto">
+                <p class="text-base sm:text-lg text-white/80 max-w-2xl mx-auto px-4">
                     以"校-生-乡"协同模式，为乡镇中学提供定制化教育资源支持，让教育成为乡村发展的"长效催化剂"
                 </p>
             </div>
             
             <!-- 核心数据卡片 -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
-                <a href="#team" class="stat-card rounded-2xl p-5 text-center card-hover cursor-pointer block">
-                    <div id="data-members" class="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">1000+</div>
-                    <div class="text-sm text-gray-600">参与人数</div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 max-w-5xl mx-auto px-4">
+                <a href="#team" class="stat-card rounded-xl sm:rounded-2xl p-4 sm:p-5 text-center card-hover cursor-pointer block">
+                    <div id="data-members" class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1">1000+</div>
+                    <div class="text-xs sm:text-sm text-gray-600">参与人数</div>
                 </a>
-                <a href="#partners" class="stat-card rounded-2xl p-5 text-center card-hover cursor-pointer block">
-                    <div id="data-schools" class="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">3</div>
-                    <div class="text-sm text-gray-600">合作学校</div>
+                <a href="#partners" class="stat-card rounded-xl sm:rounded-2xl p-4 sm:p-5 text-center card-hover cursor-pointer block">
+                    <div id="data-schools" class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1">3</div>
+                    <div class="text-xs sm:text-sm text-gray-600">合作学校</div>
                 </a>
-                <a href="#activities" class="stat-card rounded-2xl p-5 text-center card-hover cursor-pointer block">
-                    <div id="data-students" class="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">320+</div>
-                    <div class="text-sm text-gray-600">服务学生</div>
+                <a href="#activities" class="stat-card rounded-xl sm:rounded-2xl p-4 sm:p-5 text-center card-hover cursor-pointer block">
+                    <div id="data-students" class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1">320+</div>
+                    <div class="text-xs sm:text-sm text-gray-600">服务学生</div>
                 </a>
-                <a href="#progress" class="stat-card rounded-2xl p-5 text-center card-hover cursor-pointer block">
-                    <div id="data-hours" class="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">580h</div>
-                    <div class="text-sm text-gray-600">服务时长</div>
+                <a href="#progress" class="stat-card rounded-xl sm:rounded-2xl p-4 sm:p-5 text-center card-hover cursor-pointer block">
+                    <div id="data-hours" class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1">580h</div>
+                    <div class="text-xs sm:text-sm text-gray-600">服务时长</div>
                 </a>
-                <a href="#activities" class="stat-card rounded-2xl p-5 text-center card-hover col-span-2 md:col-span-1 cursor-pointer block">
-                    <div id="data-activities" class="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">3</div>
-                    <div class="text-sm text-gray-600">线下活动</div>
+                <a href="#activities" class="stat-card rounded-xl sm:rounded-2xl p-4 sm:p-5 text-center card-hover cursor-pointer block col-span-2 sm:col-span-1">
+                    <div id="data-activities" class="text-2xl sm:text-3xl lg:text-4xl font-bold text-primary-600 mb-1">3</div>
+                    <div class="text-xs sm:text-sm text-gray-600">线下活动</div>
                 </a>
             </div>
             
             <!-- 活动剪影轮播 - 横向滚动流动 -->
-            <div class="max-w-5xl mx-auto mt-8 overflow-hidden">
-                <h3 class="text-white text-center text-xl font-medium mb-4">
+            <div class="max-w-5xl mx-auto mt-6 sm:mt-8 overflow-hidden px-2 sm:px-0">
+                <h3 class="text-white text-center text-lg sm:text-xl font-medium mb-3 sm:mb-4">
                     <i class="fas fa-camera mr-2"></i>活动剪影
                 </h3>
                 <div class="relative">
                     <!-- 左侧按钮 -->
-                    <button onclick="scrollCarousel('left')" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/30 hover:bg-white/50 rounded-full flex items-center justify-center transition-colors backdrop-blur-sm">
-                        <i class="fas fa-chevron-left text-white text-xl"></i>
+                    <button onclick="scrollCarousel('left')" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-12 sm:h-12 bg-white/30 hover:bg-white/50 rounded-full flex items-center justify-center transition-colors backdrop-blur-sm">
+                        <i class="fas fa-chevron-left text-white text-sm sm:text-xl"></i>
                     </button>
                     
                     <!-- 右侧按钮 -->
-                    <button onclick="scrollCarousel('right')" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/30 hover:bg-white/50 rounded-full flex items-center justify-center transition-colors backdrop-blur-sm">
-                        <i class="fas fa-chevron-right text-white text-xl"></i>
+                    <button onclick="scrollCarousel('right')" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-12 sm:h-12 bg-white/30 hover:bg-white/50 rounded-full flex items-center justify-center transition-colors backdrop-blur-sm">
+                        <i class="fas fa-chevron-right text-white text-sm sm:text-xl"></i>
                     </button>
                     
-                    <div class="carousel-scroll-container rounded-xl overflow-hidden shadow-xl" style="height: 192px;">
+                    <div class="carousel-scroll-container rounded-xl overflow-hidden shadow-xl" style="height: 150px;" onmouseover="this.querySelector('.carousel-scroll').style.animationPlayState='paused'" onmouseout="this.querySelector('.carousel-scroll').style.animationPlayState='running'">
                         <div class="carousel-scroll" id="carouselScroll">
                         <img src="images/photo-01.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
                         <img src="images/photo-02.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
@@ -871,7 +878,7 @@
             </div>
             
             <!-- 投稿图片展示 -->
-            <div class="carousel-scroll-container rounded-xl overflow-hidden shadow-xl mb-10" style="height: 192px;">
+            <div class="carousel-scroll-container rounded-xl overflow-hidden shadow-xl mb-8 sm:mb-10" style="height: 150px;" onmouseover="this.querySelector('.carousel-scroll').style.animationPlayState='paused'" onmouseout="this.querySelector('.carousel-scroll').style.animationPlayState='running'">
                 <div class="carousel-scroll" style="animation-duration: 40s;">
                     <img src="images/post-01.jpg" alt="投稿展示" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
                     <img src="images/post-02.jpg" alt="投稿展示" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
@@ -1085,10 +1092,10 @@
                 <p class="text-white/80">守望乡野，共育希望</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
                 <!-- 联系方式 -->
-                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
-                    <h3 class="text-xl font-bold mb-6 text-center">联系方式</h3>
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8">
+                    <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-center">联系方式</h3>
                     <div class="space-y-4">
                         <div class="flex items-center bg-white/10 rounded-xl p-4">
                             <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-4">
@@ -1121,27 +1128,27 @@
                 </div>
                 
                 <!-- 抖音主页 -->
-                <a href="https://www.douyin.com/user/MS4wLjABAAAAW7OQHKfGKdgdcPNMLEWX5XNPaw-KcYgcMlG8XSWpDzY9MPbiR44v78sva7mGFT7_" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center card-hover block cursor-pointer">
-                    <div class="w-16 h-16 bg-gray-900 rounded-2xl mx-auto mb-4 flex items-center justify-center">
-                        <i class="fab fa-tiktok text-3xl text-white"></i>
+                <a href="https://www.douyin.com/user/MS4wLjABAAAAW7OQHKfGKdgdcPNMLEWX5XNPaw-KcYgcMlG8XSWpDzY9MPbiR44v78sva7mGFT7_" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 text-center card-hover block cursor-pointer">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gray-900 rounded-xl sm:rounded-2xl mx-auto mb-3 sm:mb-4 flex items-center justify-center">
+                        <i class="fab fa-tiktok text-2xl sm:text-3xl text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">抖音主页</h3>
-                    <p class="text-white/70 mb-4 text-sm">扫码关注，查看更多精彩内容</p>
-                    <div class="bg-white rounded-xl p-3 inline-block">
-                        <img src="images/douyin-qrcode.jpg" alt="抖音二维码" class="w-32 h-32 object-contain">
+                    <h3 class="text-lg sm:text-xl font-bold mb-2">抖音主页</h3>
+                    <p class="text-white/70 mb-3 sm:mb-4 text-sm">扫码关注，查看更多精彩内容</p>
+                    <div class="bg-white rounded-xl p-2 sm:p-3 inline-block">
+                        <img src="images/douyin-qrcode.jpg" alt="抖音二维码" class="w-24 h-24 sm:w-32 sm:h-32 object-contain">
                     </div>
                     <p class="text-white/60 text-xs mt-3">点击卡片跳转主页 →</p>
                 </a>
                 
                 <!-- 友情赞助 -->
-                <div onclick="openSponsorModal()" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center card-hover cursor-pointer">
-                    <div class="w-16 h-16 bg-amber-500 rounded-2xl mx-auto mb-4 flex items-center justify-center">
-                        <i class="fas fa-heart text-3xl text-white"></i>
+                <div onclick="openSponsorModal()" class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 text-center card-hover cursor-pointer sm:col-span-2 lg:col-span-1">
+                    <div class="w-12 h-12 sm:w-16 sm:h-16 bg-amber-500 rounded-xl sm:rounded-2xl mx-auto mb-3 sm:mb-4 flex items-center justify-center">
+                        <i class="fas fa-heart text-2xl sm:text-3xl text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">友情赞助</h3>
-                    <p class="text-white/70 mb-4 text-sm">支持乡村教育，助力孩子成长</p>
-                    <div class="bg-white rounded-xl p-3 inline-block">
-                        <img src="images/sponsor-qrcode.jpg" alt="赞助码" class="w-32 h-32 object-contain">
+                    <h3 class="text-lg sm:text-xl font-bold mb-2">友情赞助</h3>
+                    <p class="text-white/70 mb-3 sm:mb-4 text-sm">支持乡村教育，助力孩子成长</p>
+                    <div class="bg-white rounded-xl p-2 sm:p-3 inline-block">
+                        <img src="images/sponsor-qrcode.jpg" alt="赞助码" class="w-24 h-24 sm:w-32 sm:h-32 object-contain">
                     </div>
                     <p class="text-white/60 text-xs mt-3">点击扫码或复制口令支付</p>
                 </div>
