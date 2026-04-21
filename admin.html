@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理后台 | 安大乡村教育笔记</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .tab-active { background: #0d9488; color: white; }
+        .edit-section { border-left: 4px solid #0d9488; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- 顶部导航 -->
+    <header class="bg-teal-700 text-white shadow-lg">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold">
+                <i class="fas fa-cog mr-2"></i>网站管理后台
+            </h1>
+            <a href="index.html" class="bg-white text-teal-700 px-4 py-2 rounded-lg hover:bg-teal-50 transition">
+                <i class="fas fa-eye mr-2"></i>预览网站
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-6">
+        <!-- 标签页导航 -->
+        <div class="flex gap-2 mb-6 flex-wrap">
+            <button onclick="showTab('pending')" id="tab-pending" class="tab-btn tab-active px-4 py-2 rounded-lg font-medium transition">
+                <i class="fas fa-clock mr-2"></i>待审核投稿
+            </button>
+            <button onclick="showTab('approved')" id="tab-approved" class="tab-btn bg-white px-4 py-2 rounded-lg font-medium transition hover:bg-gray-50">
+                <i class="fas fa-check-circle mr-2"></i>已审核通过
+            </button>
+            <button onclick="showTab('team')" id="tab-team" class="tab-btn bg-white px-4 py-2 rounded-lg font-medium transition hover:bg-gray-50">
+                <i class="fas fa-users mr-2"></i>团队成员
+            </button>
+            <button onclick="showTab('activity')" id="tab-activity" class="tab-btn bg-white px-4 py-2 rounded-lg font-medium transition hover:bg-gray-50">
+                <i class="fas fa-calendar-alt mr-2"></i>活动纪实
+            </button>
+            <button onclick="showTab('faq')" id="tab-faq" class="tab-btn bg-white px-4 py-2 rounded-lg font-medium transition hover:bg-gray-50">
+                <i class="fas fa-question-circle mr-2"></i>FAQ问答
+            </button>
+        </div>
+
+        <!-- 待审核投稿 -->
+        <div id="panel-pending" class="panel bg-white rounded-xl shadow-md p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-gray-800">
+                    <i class="fas fa-clock text-amber-500 mr-2"></i>待审核投稿
+                </h2>
+                <span id="pendingCount" class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">0 条待审核</span>
+            </div>
+            <div id="pendingList" class="space-y-4">
+                <!-- 动态生成 -->
+            </div>
+        </div>
+
+        <!-- 已审核通过 -->
+        <div id="panel-approved" class="panel bg-white rounded-xl shadow-md p-6 hidden">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-gray-800">
+                    <i class="fas fa-check-circle text-green-500 mr-2"></i>已审核通过
+                </h2>
+                <span id="approvedCount" class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">0 条已通过</span>
+            </div>
+            <div id="approvedList" class="space-y-4">
+                <!-- 动态生成 -->
+            </div>
+        </div>
+
+        <!-- 团队成员 -->
+        <div id="panel-team" class="panel bg-white rounded-xl shadow-md p-6 hidden">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-users text-teal-600 mr-2"></i>团队成员管理
+            </h2>
+            <p class="text-gray-500 mb-4 text-sm">编辑每个成员的个人介绍</p>
+            
+            <div class="space-y-4" id="teamList">
+                <!-- 动态生成 -->
+            </div>
+            
+            <button onclick="saveTeamData()" class="mt-6 bg-teal-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-teal-700 transition">
+                <i class="fas fa-save mr-2"></i>保存成员信息
+            </button>
+        </div>
+
+        <!-- 活动纪实 -->
+        <div id="panel-activity" class="panel bg-white rounded-xl shadow-md p-6 hidden">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-calendar-alt text-teal-600 mr-2"></i>活动纪实管理
+            </h2>
+
+            <div id="activityList" class="space-y-4 mb-6">
+                <!-- 动态生成 -->
+            </div>
+
+            <div class="bg-teal-50 border border-teal-200 rounded-lg p-4">
+                <h3 class="font-medium text-teal-800 mb-3"><i class="fas fa-plus-circle mr-2"></i>添加新活动</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
+                    <input type="date" id="new-activity-date" class="border border-gray-300 rounded-lg px-3 py-2">
+                    <input type="text" id="new-activity-location" placeholder="活动地点" class="border border-gray-300 rounded-lg px-3 py-2">
+                    <input type="text" id="new-activity-title" placeholder="活动标题" class="border border-gray-300 rounded-lg px-3 py-2">
+                </div>
+                <textarea id="new-activity-desc" rows="2" placeholder="活动描述..." class="w-full border border-gray-300 rounded-lg p-3 mb-3"></textarea>
+                <button onclick="addActivity()" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition">
+                    <i class="fas fa-plus mr-2"></i>添加活动
+                </button>
+            </div>
+        </div>
+
+        <!-- FAQ管理 -->
+        <div id="panel-faq" class="panel bg-white rounded-xl shadow-md p-6 hidden">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-question-circle text-teal-600 mr-2"></i>FAQ问答管理
+            </h2>
+
+            <div id="faqList" class="space-y-4 mb-6">
+                <!-- 动态生成 -->
+            </div>
+
+            <button onclick="addFAQ()" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition">
+                <i class="fas fa-plus mr-2"></i>添加新问题
+            </button>
+            <button onclick="saveFAQData()" class="ml-2 bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition">
+                <i class="fas fa-save mr-2"></i>保存FAQ
+            </button>
+        </div>
+    </main>
+
+    <!-- 提示消息 -->
+    <div id="toast" class="fixed bottom-6 right-6 bg-teal-600 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-20 opacity-0 transition-all duration-300">
+        <i class="fas fa-check-circle mr-2"></i><span id="toast-msg">操作成功</span>
+    </div>
+
+    <script>
+        // 数据存储
+        let pendingPosts = JSON.parse(localStorage.getItem('pendingPosts') || '[]');
+        let sharePosts = JSON.parse(localStorage.getItem('sharePosts') || '[]');
+        let activities = JSON.parse(localStorage.getItem('activities') || '[]');
+        let faqs = JSON.parse(localStorage.getItem('faqs') || '[
+            {q: "如何加入志愿者团队？", a: ""},
+            {q: "项目如何与乡镇中学对接？", a: ""},
+            {q: "赞助合作流程是怎样的？", a: ""}
+        ]');
+        let members = JSON.parse(localStorage.getItem('members') || '{}');
+
+        // 标签页切换
+        function showTab(tab) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + tab).classList.remove('hidden');
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('tab-active');
+                b.classList.add('bg-white');
+            });
+            document.getElementById('tab-' + tab).classList.add('tab-active');
+            document.getElementById('tab-' + tab).classList.remove('bg-white');
+        }
+
+        // 渲染待审核列表
+        function renderPendingList() {
+            const container = document.getElementById('pendingList');
+            document.getElementById('pendingCount').textContent = pendingPosts.length + ' 条待审核';
+            
+            if (pendingPosts.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center py-8">暂无待审核投稿</p>';
+                return;
+            }
+            
+            container.innerHTML = pendingPosts.map((post, index) => `
+                <div class="edit-section bg-gray-50 p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="text-teal-600 font-medium">${post.date}</span>
+                            <span class="text-gray-400 mx-2">|</span>
+                            <span class="text-gray-600">${post.category}</span>
+                            <span class="text-gray-400 mx-2">|</span>
+                            <span class="text-gray-800 font-medium">${post.author}</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="approvePost(${index})" class="bg-green-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-green-600 transition">
+                                <i class="fas fa-check mr-1"></i>通过
+                            </button>
+                            <button onclick="rejectPost(${index})" class="bg-red-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-600 transition">
+                                <i class="fas fa-times mr-1"></i>拒绝
+                            </button>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-gray-800 mb-2">${post.title}</h4>
+                    <p class="text-gray-600 text-sm">${post.content}</p>
+                    ${post.contact ? '<p class="text-gray-400 text-xs mt-2">联系方式：' + post.contact + '</p>' : ''}
+                </div>
+            `).join('');
+        }
+
+        // 审核通过
+        function approvePost(index) {
+            const post = pendingPosts[index];
+            post.status = 'approved';
+            sharePosts.push(post);
+            pendingPosts.splice(index, 1);
+            
+            localStorage.setItem('sharePosts', JSON.stringify(sharePosts));
+            localStorage.setItem('pendingPosts', JSON.stringify(pendingPosts));
+            
+            renderPendingList();
+            renderApprovedList();
+            showToast('投稿已通过审核！');
+        }
+
+        // 拒绝投稿
+        function rejectPost(index) {
+            if (confirm('确定拒绝这篇投稿吗？')) {
+                pendingPosts.splice(index, 1);
+                localStorage.setItem('pendingPosts', JSON.stringify(pendingPosts));
+                renderPendingList();
+                showToast('投稿已拒绝');
+            }
+        }
+
+        // 渲染已通过列表
+        function renderApprovedList() {
+            const container = document.getElementById('approvedList');
+            document.getElementById('approvedCount').textContent = sharePosts.length + ' 条已通过';
+            
+            if (sharePosts.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center py-8">暂无已通过的投稿</p>';
+                return;
+            }
+            
+            container.innerHTML = sharePosts.map((post, index) => `
+                <div class="edit-section bg-gray-50 p-4 rounded-lg">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="text-green-600 font-medium"><i class="fas fa-check-circle mr-1"></i>已通过</span>
+                            <span class="text-gray-400 mx-2">|</span>
+                            <span class="text-gray-600">${post.date}</span>
+                            <span class="text-gray-400 mx-2">|</span>
+                            <span class="text-gray-800 font-medium">${post.author}</span>
+                        </div>
+                        <button onclick="deleteApproved(${index})" class="text-red-500 hover:text-red-700 text-sm">
+                            <i class="fas fa-trash mr-1"></i>删除
+                        </button>
+                    </div>
+                    <h4 class="font-bold text-gray-800 mb-2">${post.title}</h4>
+                    <p class="text-gray-600 text-sm">${post.content.substring(0, 100)}...</p>
+                </div>
+            `).join('');
+        }
+
+        // 删除已通过的投稿
+        function deleteApproved(index) {
+            if (confirm('确定删除这篇投稿吗？')) {
+                sharePosts.splice(index, 1);
+                localStorage.setItem('sharePosts', JSON.stringify(sharePosts));
+                renderApprovedList();
+                showToast('投稿已删除');
+            }
+        }
+
+        // 团队成员管理
+        const teamMembers = [
+            { id: 'litao', name: '李涛', college: '大数据与统计学院', isLeader: true },
+            { id: 'sangruoxi', name: '桑若曦', college: '大数据与统计学院' },
+            { id: 'yaochen', name: '姚晨', college: '大数据与统计学院' },
+            { id: 'liuxinyu', name: '刘欣玉', college: '大数据与统计学院' },
+            { id: 'zhengtianhui', name: '郑天慧', college: '大数据与统计学院' },
+            { id: 'zhangxuanyu', name: '张选宇', college: '大数据与统计学院' },
+            { id: 'wanghanwen', name: '王瀚文', college: '经济学院' },
+            { id: 'jinyi', name: '金怡', college: '经济学院' },
+            { id: 'zhangfan', name: '张帆', college: '计算机科学与技术学院' },
+            { id: 'wangyuanyuan', name: '王媛媛', college: '外语学院' }
+        ];
+
+        function renderTeamList() {
+            const container = document.getElementById('teamList');
+            container.innerHTML = teamMembers.map(m => `
+                <div class="edit-section bg-gray-50 p-4 rounded-lg">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="bg-teal-600 text-white px-3 py-1 rounded-full text-sm font-medium">${m.name}</span>
+                        ${m.isLeader ? '<span class="bg-amber-100 text-amber-700 px-2 py-1 rounded text-xs">项目负责人</span>' : ''}
+                        <span class="text-gray-500 text-sm">${m.college}</span>
+                    </div>
+                    <textarea id="member-${m.id}" rows="2" class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500" placeholder="输入个人介绍...">${members[m.id] || ''}</textarea>
+                </div>
+            `).join('');
+        }
+
+        function saveTeamData() {
+            teamMembers.forEach(m => {
+                const el = document.getElementById('member-' + m.id);
+                if (el) members[m.id] = el.value;
+            });
+            localStorage.setItem('members', JSON.stringify(members));
+            showToast('成员信息已保存！');
+        }
+
+        // 活动管理
+        function renderActivityList() {
+            const container = document.getElementById('activityList');
+            if (activities.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center py-4">暂无活动记录</p>';
+                return;
+            }
+            container.innerHTML = activities.map((a, i) => `
+                <div class="edit-section bg-gray-50 p-4 rounded-lg flex justify-between items-start">
+                    <div>
+                        <span class="text-teal-600 font-medium">${a.date}</span>
+                        <span class="text-gray-400 mx-2">|</span>
+                        <span class="text-gray-600">${a.location || '未指定地点'}</span>
+                        <h4 class="font-bold text-gray-800 mt-1">${a.title}</h4>
+                        <p class="text-gray-600 text-sm">${a.desc || ''}</p>
+                    </div>
+                    <button onclick="deleteActivity(${i})" class="text-red-500 hover:text-red-700">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function addActivity() {
+            const date = document.getElementById('new-activity-date').value;
+            const location = document.getElementById('new-activity-location').value;
+            const title = document.getElementById('new-activity-title').value;
+            const desc = document.getElementById('new-activity-desc').value;
+            
+            if (!date || !title) {
+                showToast('请填写日期和标题！', 'error');
+                return;
+            }
+            
+            activities.unshift({ date, location, title, desc });
+            localStorage.setItem('activities', JSON.stringify(activities));
+            renderActivityList();
+            
+            // 清空表单
+            document.getElementById('new-activity-date').value = '';
+            document.getElementById('new-activity-location').value = '';
+            document.getElementById('new-activity-title').value = '';
+            document.getElementById('new-activity-desc').value = '';
+            
+            showToast('活动已添加！');
+        }
+
+        function deleteActivity(index) {
+            if (confirm('确定删除这条活动？')) {
+                activities.splice(index, 1);
+                localStorage.setItem('activities', JSON.stringify(activities));
+                renderActivityList();
+                showToast('活动已删除');
+            }
+        }
+
+        // FAQ管理
+        function renderFAQList() {
+            const container = document.getElementById('faqList');
+            container.innerHTML = faqs.map((f, i) => `
+                <div class="edit-section bg-gray-50 p-4 rounded-lg">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-teal-600 font-medium">问题 ${i + 1}</span>
+                        <button onclick="deleteFAQ(${i})" class="text-red-500 hover:text-red-700">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="faq-q w-full border border-gray-300 rounded-lg px-3 py-2 mb-2" value="${f.q}" placeholder="问题">
+                    <textarea class="faq-a w-full border border-gray-300 rounded-lg px-3 py-2" rows="2" placeholder="答案">${f.a}</textarea>
+                </div>
+            `).join('');
+        }
+
+        function addFAQ() {
+            faqs.push({ q: '新问题', a: '' });
+            localStorage.setItem('faqs', JSON.stringify(faqs));
+            renderFAQList();
+        }
+
+        function deleteFAQ(index) {
+            if (confirm('确定删除这个问题？')) {
+                faqs.splice(index, 1);
+                localStorage.setItem('faqs', JSON.stringify(faqs));
+                renderFAQList();
+            }
+        }
+
+        function saveFAQData() {
+            faqs = [];
+            document.querySelectorAll('.edit-section').forEach(item => {
+                const q = item.querySelector('.faq-q');
+                const a = item.querySelector('.faq-a');
+                if (q && a && q.value) {
+                    faqs.push({ q: q.value, a: a.value });
+                }
+            });
+            localStorage.setItem('faqs', JSON.stringify(faqs));
+            showToast('FAQ已保存！');
+        }
+
+        // 提示消息
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            toast.className = toast.className.replace('translate-y-20 opacity-0', 'translate-y-0 opacity-100');
+            setTimeout(() => {
+                toast.className = toast.className.replace('translate-y-0 opacity-100', 'translate-y-20 opacity-0');
+            }, 2000);
+        }
+
+        // 初始化
+        renderPendingList();
+        renderApprovedList();
+        renderTeamList();
+        renderActivityList();
+        renderFAQList();
+    </script>
+</body>
+</html>
