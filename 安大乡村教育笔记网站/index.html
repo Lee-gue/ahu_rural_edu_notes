@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安大乡村教育笔记 | 守望乡野，共育希望</title>
+    <meta name="description" content="守望乡野，共育希望。安徽大学乡村教育笔记项目，致力于为乡镇中学提供定制化教育资源支持。">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="config.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0d9488 0%, #10b981 50%, #34d399 100%);
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(13, 148, 136, 0.85) 0%, rgba(16, 185, 129, 0.8) 100%),
+                        url('images/background.jpg') center/cover no-repeat;
+        }
+        
+        .carousel {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .carousel-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+        
+        .carousel-dot.active {
+            background: white;
+        }
+        
+        /* 横向滚动轮播 */
+        .carousel-scroll-container {
+            background: rgba(0,0,0,0.1);
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .carousel-scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .carousel-scroll {
+            display: flex;
+            gap: 12px;
+            padding: 10px;
+            animation: scrollLeft 60s linear infinite;
+        }
+        
+        .carousel-scroll:hover {
+            animation-play-state: paused;
+        }
+        
+        .carousel-scroll-item {
+            height: 192px;
+            width: auto;
+            min-width: 256px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        
+        @keyframes scrollLeft {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        /* 图片放大弹窗 */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .image-modal.active {
+            display: flex;
+        }
+        
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        .image-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+        }
+        
+        .faq-modal {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .faq-modal.active {
+            display: flex;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+            border: 3px solid #d1fae5;
+        }
+        
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a'
+                        },
+                        warm: {
+                            yellow: '#fbbf24',
+                            orange: '#f59e0b'
+                        },
+                        soft: {
+                            purple: '#c4b5fd',
+                            pink: '#f9a8d4'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 scroll-smooth">
+    <!-- 导航栏 -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-book-open text-white text-lg"></i>
+                    </div>
+                    <span class="font-bold text-xl text-gray-800">安大乡村教育笔记</span>
+                </div>
+                
+                <!-- 导航链接 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">首页</a>
+                    <a href="#progress" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">项目进展</a>
+                    <a href="#activities" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">活动纪实</a>
+                    <a href="#partners" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">合作基地</a>
+                    <a href="#team" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">团队成员</a>
+                    <a href="#share" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">青春笔记</a>
+                    <a href="#contact" class="text-gray-600 hover:text-primary-600 transition-colors font-medium">联系我们</a>
+                </div>
+                
+                <!-- 右侧按钮 -->
+                <div class="flex items-center space-x-3">
+                    <button onclick="toggleFAQ()" class="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors">
+                        <i class="fas fa-question text-gray-600"></i>
+                    </button>
+                    <a href="#contact" class="hidden sm:inline-flex px-5 py-2 bg-primary-600 text-white rounded-full font-medium hover:bg-primary-700 transition-colors">
+                        加入我们
+                    </a>
+                    <button class="md:hidden w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
+                        <i class="fas fa-bars text-gray-600"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen hero-bg flex items-center pt-16">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/20"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="text-center text-white mb-12">
+                <div class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium mb-6">
+                    <i class="fas fa-heart text-warm-orange mr-2"></i>
+                    安徽大学学生发展支持项目
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    安大乡村教育笔记
+                </h1>
+                <p class="text-xl sm:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    守望乡野，共育希望
+                </p>
+                <p class="text-lg text-white/80 max-w-2xl mx-auto">
+                    以"校-生-乡"协同模式，为乡镇中学提供定制化教育资源支持，让教育成为乡村发展的"长效催化剂"
+                </p>
+            </div>
+            
+            <!-- 核心数据卡片 -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-5xl mx-auto">
+                <a href="#team" class="stat-card rounded-2xl p-5 text-center card-hover cursor-pointer block">
+                    <div id="data-members" class="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">1000+</div>
+                    <div class="text-sm text-gray-600">参与人数</div>
+                </a>
+                <a href="#partners" class="stat-card rounded-2xl p-5 text-center card-hover cursor-pointer block">
+                    <div id="data-schools" class="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">3</div>
+                    <div class="text-sm text-gray-600">合作学校</div>
+                </a>
+                <a href="#activities" class="stat-card rounded-2xl p-5 text-center card-hover cursor-pointer block">
+                    <div id="data-students" class="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">320+</div>
+                    <div class="text-sm text-gray-600">服务学生</div>
+                </a>
+                <a href="#progress" class="stat-card rounded-2xl p-5 text-center card-hover cursor-pointer block">
+                    <div id="data-hours" class="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">580h</div>
+                    <div class="text-sm text-gray-600">服务时长</div>
+                </a>
+                <a href="#activities" class="stat-card rounded-2xl p-5 text-center card-hover col-span-2 md:col-span-1 cursor-pointer block">
+                    <div id="data-activities" class="text-3xl sm:text-4xl font-bold text-primary-600 mb-1">3</div>
+                    <div class="text-sm text-gray-600">线下活动</div>
+                </a>
+            </div>
+            
+            <!-- 活动剪影轮播 - 横向滚动流动 -->
+            <div class="max-w-5xl mx-auto mt-8 overflow-hidden">
+                <h3 class="text-white text-center text-xl font-medium mb-4">
+                    <i class="fas fa-camera mr-2"></i>活动剪影
+                </h3>
+                <div class="relative">
+                    <!-- 左侧按钮 -->
+                    <button onclick="scrollCarousel('left')" class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/30 hover:bg-white/50 rounded-full flex items-center justify-center transition-colors backdrop-blur-sm">
+                        <i class="fas fa-chevron-left text-white text-xl"></i>
+                    </button>
+                    
+                    <!-- 右侧按钮 -->
+                    <button onclick="scrollCarousel('right')" class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/30 hover:bg-white/50 rounded-full flex items-center justify-center transition-colors backdrop-blur-sm">
+                        <i class="fas fa-chevron-right text-white text-xl"></i>
+                    </button>
+                    
+                    <div class="carousel-scroll-container rounded-xl overflow-hidden shadow-xl" style="height: 192px;">
+                        <div class="carousel-scroll" id="carouselScroll">
+                        <img src="images/photo-01.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-02.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-03.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-04.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-05.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-06.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-07.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-08.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-09.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-10.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-11.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-12.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-13.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-14.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-15.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-16.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-17.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-18.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-19.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-20.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-21.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-22.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-23.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-24.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-25.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-26.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-27.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-28.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-29.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-30.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-31.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-32.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-33.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                        <img src="images/photo-34.jpg" alt="活动剪影" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+            <!-- 图片放大弹窗 -->
+            <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+                <span class="image-modal-close">&times;</span>
+                <img id="modalImage" src="" alt="放大图片">
+            </div>
+        </div>
+        
+        <!-- 滚动提示 -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-white text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- 项目进展 -->
+    <section id="progress" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">项目进展</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">记录每一个成长的瞬间，见证乡村教育的改变</p>
+            </div>
+            
+            <!-- 数据看板 -->
+            <div class="bg-gradient-to-r from-primary-600 to-primary-500 rounded-3xl p-8 mb-12 text-white">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <a href="#gantt" class="text-center block cursor-pointer hover:scale-105 transition-transform">
+                        <div class="text-5xl font-bold mb-2">60%</div>
+                        <div class="text-white/80">项目完成度</div>
+                        <div class="mt-4 bg-white/20 rounded-full h-3">
+                            <div class="progress-bar h-3 rounded-full" style="width: 60%"></div>
+                        </div>
+                        <div class="text-xs text-white/60 mt-2">点击查看甘特图</div>
+                    </a>
+                    <a href="#partners" class="text-center block cursor-pointer hover:scale-105 transition-transform">
+                        <div class="text-5xl font-bold mb-2">3/3</div>
+                        <div class="text-white/80">实践基地建设</div>
+                        <div class="text-xs text-white/60 mt-2">点击查看详情</div>
+                    </a>
+                    <a href="#progress" class="text-center block cursor-pointer hover:scale-105 transition-transform">
+                        <div class="text-5xl font-bold mb-2">3</div>
+                        <div class="text-white/80">调研报告输出</div>
+                        <div class="text-xs text-white/60 mt-2">点击查看详情</div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 进展卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 卡片1 -->
+                <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden card-hover shadow-sm">
+                    <div class="aspect-[3/1] bg-gradient-to-br from-primary-100 to-primary-50 flex items-center justify-center">
+                        <i class="fas fa-handshake text-6xl text-primary-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            2026年4月
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">霍邱县临水镇实践基地挂牌</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">与临水镇中心学校正式签署合作协议，成立首个安徽大学乡村教育实践基地，开展物理经验分享、体育赋能和心理健康关爱活动。</p>
+                        <div class="mt-4 flex items-center text-primary-600 text-sm font-medium">
+                            <span>查看详情</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 卡片2 -->
+                <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden card-hover shadow-sm">
+                    <div class="aspect-[3/1] bg-gradient-to-br from-soft-purple/30 to-soft-pink/30 flex items-center justify-center">
+                        <i class="fas fa-users text-6xl text-purple-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            2026年3月
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">志愿者招募圆满完成</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">面向全校招募志愿者32名，涵盖经济学院、外语学院、大数据与统计学院等多个专业，为后续活动开展储备人才。</p>
+                        <div class="mt-4 flex items-center text-primary-600 text-sm font-medium">
+                            <span>查看详情</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 卡片3 -->
+                <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden card-hover shadow-sm">
+                    <div class="aspect-[3/1] bg-gradient-to-br from-warm-yellow/30 to-warm-orange/30 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-6xl text-amber-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <i class="fas fa-calendar-alt mr-2"></i>
+                            2026年1月
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">乡镇中学调研报告发布</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">完成对3所试点乡镇中学的深度调研，形成两万字调研报告，系统梳理教学痛点与学生需求。</p>
+                        <div class="mt-4 flex items-center text-primary-600 text-sm font-medium">
+                            <span>查看详情</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 项目甘特图 -->
+            <div id="gantt" class="bg-white border border-gray-100 rounded-2xl p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">项目时间线</h3>
+                <div class="space-y-6">
+                    <!-- 甘特图条目 -->
+                    <div class="relative">
+                        <div class="flex items-center mb-2">
+                            <span class="w-32 text-sm font-medium text-gray-700">调研阶段</span>
+                            <div class="flex-1 h-8 bg-gray-100 rounded-lg relative overflow-hidden">
+                                <div class="absolute left-0 top-0 h-full bg-gradient-to-r from-primary-400 to-primary-500 rounded-lg" style="width: 100%">
+                                    <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-white font-medium">2025.10 - 2025.12 ✓</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="flex items-center mb-2">
+                            <span class="w-32 text-sm font-medium text-gray-700">报告撰写</span>
+                            <div class="flex-1 h-8 bg-gray-100 rounded-lg relative overflow-hidden">
+                                <div class="absolute left-[20%] top-0 h-full bg-gradient-to-r from-primary-400 to-primary-500 rounded-lg" style="width: 25%">
+                                    <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-white font-medium whitespace-nowrap">2026.1-3 ✓</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="flex items-center mb-2">
+                            <span class="w-32 text-sm font-medium text-gray-700">实践活动</span>
+                            <div class="flex-1 h-8 bg-gray-100 rounded-lg relative overflow-hidden">
+                                <div class="absolute left-[40%] top-0 h-full bg-gradient-to-r from-purple-400 to-purple-500 rounded-lg animate-pulse" style="width: 40%">
+                                    <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-white font-medium whitespace-nowrap">2026.3-6 进行中</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="flex items-center mb-2">
+                            <span class="w-32 text-sm font-medium text-gray-700">效果评估</span>
+                            <div class="flex-1 h-8 bg-gray-100 rounded-lg relative overflow-hidden">
+                                <div class="absolute left-[75%] top-0 h-full bg-gradient-to-r from-gray-300 to-gray-400 rounded-lg" style="width: 15%">
+                                    <span class="absolute left-1 top-1/2 -translate-y-1/2 text-xs text-white font-medium">7月</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 时间轴标记 -->
+                <div class="flex mt-4 text-xs text-gray-500">
+                    <span class="w-32"></span>
+                    <div class="flex-1 flex justify-between px-1">
+                        <span>2025.10</span>
+                        <span>2026.1</span>
+                        <span>2026.4</span>
+                        <span>2026.7</span>
+                        <span>2026.8</span>
+                    </div>
+                </div>
+                
+                <!-- 图例 -->
+                <div class="flex items-center gap-6 mt-6 pt-6 border-t border-gray-100">
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-primary-500 rounded mr-2"></div>
+                        <span class="text-sm text-gray-600">已完成</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-purple-500 rounded mr-2 animate-pulse"></div>
+                        <span class="text-sm text-gray-600">进行中</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-gray-300 rounded mr-2"></div>
+                        <span class="text-sm text-gray-600">未开始</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 合作基地 -->
+    <section id="partners" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">合作基地</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">携手乡镇中学，共建教育实践平台</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 霍邱县临水镇中心学校 -->
+                <a href="https://v.douyin.com/th4y2saAfJs/" target="_blank" class="bg-white rounded-2xl overflow-hidden card-hover shadow-sm block cursor-pointer">
+                    <div class="aspect-[3/1] bg-gradient-to-br from-primary-100 to-primary-50 flex items-center justify-center">
+                        <i class="fas fa-school text-6xl text-primary-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">霍邱县临水镇中心学校</h3>
+                        <p class="text-gray-600 text-sm mb-3">首个安大乡村教育笔记实践基地</p>
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <i class="fas fa-map-marker-alt mr-2 text-primary-500"></i>
+                            安徽省六安市霍邱县临水镇
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="inline-flex items-center px-3 py-1.5 bg-gray-900 text-white text-xs rounded-full">
+                                <i class="fab fa-tiktok mr-1"></i>
+                                点击跳转抖音
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 休宁县商山初级中学 -->
+                <a href="https://jyj.huangshan.gov.cn/jyxw/xykx/9310718.html" target="_blank" class="bg-white rounded-2xl overflow-hidden card-hover shadow-sm block cursor-pointer">
+                    <div class="aspect-[3/1] bg-gradient-to-br from-soft-purple/30 to-soft-pink/30 flex items-center justify-center">
+                        <i class="fas fa-school text-6xl text-purple-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">休宁县商山初级中学</h3>
+                        <p class="text-gray-600 text-sm mb-3">安徽大学乡村教育实践基地二</p>
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <i class="fas fa-map-marker-alt mr-2 text-purple-500"></i>
+                            安徽省黄山市休宁县商山镇
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="inline-flex items-center px-3 py-1.5 bg-purple-50 text-purple-600 text-xs rounded-full">
+                                <i class="fas fa-globe mr-1"></i>
+                                点击查看学校主页
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- 颍上县三王中学 -->
+                <a href="https://v.douyin.com/9KvOFORHK_M/" target="_blank" class="bg-white rounded-2xl overflow-hidden card-hover shadow-sm block cursor-pointer">
+                    <div class="aspect-[3/1] bg-gradient-to-br from-amber-100 to-amber-50 flex items-center justify-center">
+                        <i class="fas fa-school text-6xl text-amber-400"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">颍上县三王中学</h3>
+                        <p class="text-gray-600 text-sm mb-3">安徽大学乡村教育实践基地三</p>
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <i class="fas fa-map-marker-alt mr-2 text-amber-500"></i>
+                            安徽省阜阳市颍上县
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="inline-flex items-center px-3 py-1.5 bg-gray-900 text-white text-xs rounded-full">
+                                <i class="fab fa-tiktok mr-1"></i>
+                                点击跳转抖音
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 活动纪实 -->
+    <section id="activities" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">活动纪实</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">用镜头记录每一次相遇，用文字传递每一份温暖</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 活动一 -->
+                <a href="https://www.douyin.com/user/MS4wLjABAAAAW7OQHKfGKdgdcPNMLEWX5XNPaw-KcYgcMlG8XSWpDzY9MPbiR44v78sva7mGFT7_?from_tab_name=main&modal_id=7627161050999622735" target="_blank" class="bg-white rounded-2xl overflow-hidden card-hover shadow-sm block">
+                    <div class="aspect-[3/1] bg-gray-200 relative">
+                        <img src="images/photo-20.jpg" alt="活动照片" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-primary-500 text-white text-xs px-3 py-1 rounded-full">
+                            暑期实践
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <i class="fas fa-clock mr-2"></i>
+                            2024.07.15-18
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">安徽大学赴临水镇暑期社会实践</h3>
+                        <p class="text-gray-600 text-sm">赴霍邱县临水镇开展社会实践，走访党政办、中心校、临水酒业，深入了解乡村发展现状。</p>
+                    </div>
+                </a>
+                
+                <!-- 活动二 -->
+                <a href="https://www.douyin.com/user/MS4wLjABAAAAW7OQHKfGKdgdcPNMLEWX5XNPaw-KcYgcMlG8XSWpDzY9MPbiR44v78sva7mGFT7_?from_tab_name=main&modal_id=7627745710637243087" target="_blank" class="bg-white rounded-2xl overflow-hidden card-hover shadow-sm block">
+                    <div class="aspect-[3/1] bg-gray-200 relative">
+                        <img src="images/photo-21.jpg" alt="活动照片" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-red-500 text-white text-xs px-3 py-1 rounded-full">
+                            精彩视频
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <i class="fas fa-clock mr-2"></i>
+                            2026.04.21
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">安大乡村笔记×安大社协</h3>
+                        <p class="text-gray-600 text-sm">点击观看活动精彩视频 →</p>
+                    </div>
+                </a>
+                
+                <!-- 活动三 -->
+                <a href="https://www.douyin.com/user/MS4wLjABAAAAW7OQHKfGKdgdcPNMLEWX5XNPaw-KcYgcMlG8XSWpDzY9MPbiR44v78sva7mGFT7_?from_tab_name=main" target="_blank" class="bg-white rounded-2xl overflow-hidden card-hover shadow-sm block">
+                    <div class="aspect-[3/1] bg-gray-200 relative">
+                        <img src="images/photo-22.jpg" alt="活动照片" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-amber-500 text-white text-xs px-3 py-1 rounded-full">
+                            更多精彩
+                        </div>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center text-sm text-gray-500 mb-2">
+                            <i class="fas fa-clock mr-2"></i>
+                            持续更新中
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">乡村教育精彩瞬间</h3>
+                        <p class="text-gray-600 text-sm">每一次相遇都是成长，每一份付出都有收获。点击卡片，了解更多精彩故事。</p>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- 查看更多 -->
+            <div class="text-center mt-10">
+                <a href="https://www.douyin.com/user/MS4wLjABAAAAW7OQHKfGKdgdcPNMLEWX5XNPaw-KcYgcMlG8XSWpDzY9MPbiR44v78sva7mGFT7_" target="_blank" class="inline-block px-8 py-3 bg-white border-2 border-primary-500 text-primary-600 rounded-full font-medium hover:bg-primary-50 transition-colors">
+                    查看更多活动
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队成员 -->
+    <section id="team" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">团队成员</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">不同专业、不同学院，有情怀，有担当。</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+                <!-- 李涛 -->
+                <div onclick="showMember('litao')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        李
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">李涛</h3>
+                    <p class="text-sm text-gray-500 mb-2">大数据与统计学院</p>
+                    <span class="inline-block bg-primary-100 text-primary-700 text-xs px-3 py-1 rounded-full">项目负责人</span>
+                </div>
+                
+                <!-- 桑若曦 -->
+                <div onclick="showMember('sangruoxi')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-soft-purple to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        桑
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">桑若曦</h3>
+                    <p class="text-sm text-gray-500">大数据与统计学院</p>
+                </div>
+                
+                <!-- 姚晨 -->
+                <div onclick="showMember('yaochen')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-pink-300 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        姚
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">姚晨</h3>
+                    <p class="text-sm text-gray-500">大数据与统计学院</p>
+                </div>
+                
+                <!-- 刘欣玉 -->
+                <div onclick="showMember('liuxinyu')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-teal-300 to-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        刘
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">刘欣玉</h3>
+                    <p class="text-sm text-gray-500">大数据与统计学院</p>
+                </div>
+                
+                <!-- 郑天慧 -->
+                <div onclick="showMember('zhengtianhui')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-warm-yellow to-warm-orange rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        郑
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">郑天慧</h3>
+                    <p class="text-sm text-gray-500">大数据与统计学院</p>
+                </div>
+                
+                <!-- 张选宇 -->
+                <div onclick="showMember('zhangxuanyu')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-indigo-300 to-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        张
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">张选宇</h3>
+                    <p class="text-sm text-gray-500">大数据与统计学院</p>
+                </div>
+                
+                <!-- 王瀚文 -->
+                <div onclick="showMember('wanghanwen')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-300 to-blue-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        王
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">王瀚文</h3>
+                    <p class="text-sm text-gray-500">经济学院</p>
+                </div>
+                
+                <!-- 金怡 -->
+                <div onclick="showMember('jinyi')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-emerald-300 to-emerald-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        金
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">金怡</h3>
+                    <p class="text-sm text-gray-500">经济学院</p>
+                </div>
+                
+                <!-- 张帆 -->
+                <div onclick="showMember('zhangfan')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-rose-300 to-rose-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        张
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">张帆</h3>
+                    <p class="text-sm text-gray-500">计算机科学与技术学院</p>
+                </div>
+                
+                <!-- 王媛媛 -->
+                <div onclick="showMember('wangyuanyuan')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-violet-300 to-violet-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        王
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">王媛媛</h3>
+                    <p class="text-sm text-gray-500">外语学院</p>
+                </div>
+                
+                <!-- 张越 -->
+                <div onclick="showMember('zhangyue')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-cyan-300 to-cyan-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        张
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">张越</h3>
+                    <p class="text-sm text-gray-500">社会与政治学院</p>
+                </div>
+                
+                <!-- 陶思雨 -->
+                <div onclick="showMember('taosiyu')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-fuchsia-300 to-fuchsia-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        陶
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">陶思雨</h3>
+                    <p class="text-sm text-gray-500">管理学院</p>
+                </div>
+                
+                <!-- 陈晨 -->
+                <div onclick="showMember('chenchen')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-lime-300 to-lime-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        陈
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">陈晨</h3>
+                    <p class="text-sm text-gray-500">外语学院</p>
+                </div>
+                
+                <!-- 鲍可可 -->
+                <div onclick="showMember('baokeke')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-orange-300 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        鲍
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">鲍可可</h3>
+                    <p class="text-sm text-gray-500">社会与政治学院</p>
+                </div>
+                
+                <!-- 王嘉成 -->
+                <div onclick="showMember('wangjiacheng')" class="bg-gray-50 rounded-2xl p-6 text-center card-hover cursor-pointer">
+                    <div class="w-20 h-20 bg-gradient-to-br from-sky-300 to-sky-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
+                        王
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-1">王嘉成</h3>
+                    <p class="text-sm text-gray-500">化学化工学院</p>
+                </div>
+                
+                <!-- 成为新成员 -->
+                <div onclick="showMember('join')" class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-6 text-center card-hover cursor-pointer border-2 border-dashed border-primary-300">
+                    <div class="w-20 h-20 bg-white rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
+                        <i class="fas fa-plus text-3xl text-primary-500"></i>
+                    </div>
+                    <h3 class="font-bold text-primary-700 mb-1">成为新成员</h3>
+                    <p class="text-sm text-primary-600">期待你的加入</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 青春笔记 - 投稿分享 -->
+    <section id="share" class="py-20 bg-gradient-to-br from-amber-50 to-orange-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">青春笔记</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">分享你的大学生活、专业学习、日常感悟、旅游经历...记录青春的每一刻</p>
+            </div>
+            
+            <!-- 投稿按钮 -->
+            <div class="text-center mb-10">
+                <button onclick="openShareContactModal()" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full font-medium hover:from-amber-600 hover:to-orange-600 transition shadow-lg">
+                    <i class="fas fa-pen mr-2"></i>我要投稿
+                </button>
+                <p class="text-gray-500 text-sm mt-2">点击查看投稿方式</p>
+            </div>
+            
+            <!-- 投稿图片展示 -->
+            <div class="carousel-scroll-container rounded-xl overflow-hidden shadow-xl mb-10" style="height: 192px;">
+                <div class="carousel-scroll" style="animation-duration: 40s;">
+                    <img src="images/post-01.jpg" alt="投稿展示" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                    <img src="images/post-02.jpg" alt="投稿展示" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                    <img src="images/post-03.jpg" alt="投稿展示" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                    <img src="images/post-04.jpg" alt="投稿展示" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                    <!-- 重复一次实现无缝滚动 -->
+                    <img src="images/post-01.jpg" alt="投稿展示" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                    <img src="images/post-02.jpg" alt="投稿展示" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                    <img src="images/post-03.jpg" alt="投稿展示" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                    <img src="images/post-04.jpg" alt="投稿展示" class="carousel-scroll-item cursor-pointer hover:scale-105 transition-transform" onclick="openImageModal(this.src)">
+                </div>
+            </div>
+            
+            <!-- 更多精彩 -->
+            <div class="text-center mb-10">
+                <a href="https://www.douyin.com/user/MS4wLjABAAAAW7OQHKfGKdgdcPNMLEWX5XNPaw-KcYgcMlG8XSWpDzY9MPbiR44v78sva7mGFT7_?from_tab_name=main&modal_id=7628561132589258728" target="_blank" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-pink-500 to-rose-500 text-white rounded-full font-medium hover:from-pink-600 hover:to-rose-600 transition shadow-lg">
+                    <i class="fas fa-video mr-2"></i>更多精彩
+                </a>
+            </div>
+            
+            <!-- 投稿展示区 -->
+            <div id="shareList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 示例投稿卡片 -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden card-hover">
+                    <div class="h-40 bg-gray-200 relative">
+                        <img src="images/cover-01.jpg" alt="投稿封面" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="bg-amber-100 text-amber-700 px-2 py-1 rounded-full text-xs font-medium">旅游经历</span>
+                            <span class="text-gray-400 text-xs">2026-04-15</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">黄山日出之旅</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">凌晨三点出发，只为那一抹破晓的曙光。站在光明顶，看云海翻涌，日出一瞬间，所有的疲惫都值得...</p>
+                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white text-xs font-bold">安</div>
+                                <span class="text-sm text-gray-600">安小旅</span>
+                            </div>
+                            <button class="text-teal-600 text-sm hover:text-teal-700 font-medium">阅读全文 →</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden card-hover">
+                    <div class="h-40 bg-gray-200 relative">
+                        <img src="images/cover-02.jpg" alt="投稿封面" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs font-medium">专业学习</span>
+                            <span class="text-gray-400 text-xs">2026-04-10</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">大数据学习心得</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">从Python基础到机器学习，一路走来磕磕绊绊。分享我的学习路线和一些踩过的坑，希望对学弟学妹有帮助...</p>
+                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">数</div>
+                                <span class="text-sm text-gray-600">数据小达人</span>
+                            </div>
+                            <button class="text-teal-600 text-sm hover:text-teal-700 font-medium">阅读全文 →</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden card-hover">
+                    <div class="h-40 bg-gray-200 relative">
+                        <img src="images/cover-03.jpg" alt="投稿封面" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="bg-pink-100 text-pink-700 px-2 py-1 rounded-full text-xs font-medium">日常感悟</span>
+                            <span class="text-gray-400 text-xs">2026-04-08</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">图书馆的午后时光</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">窗外的梧桐叶又绿了，坐在靠窗的位置，阳光透过树叶洒在书页上，这一刻的宁静，是大学生活最美的馈赠...</p>
+                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center text-white text-xs font-bold">静</div>
+                                <span class="text-sm text-gray-600">静水流深</span>
+                            </div>
+                            <button class="text-teal-600 text-sm hover:text-teal-700 font-medium">阅读全文 →</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 投稿联系方式弹窗 -->
+    <div id="shareContactModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">✏️ 投稿方式</h3>
+                <button onclick="closeShareContactModal()" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-times text-gray-600"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-envelope text-white text-2xl"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm">请将投稿内容发送至以下邮箱</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                    <div class="text-xs text-gray-500 mb-1">投稿邮箱</div>
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono text-lg text-gray-800 select-all">227794112@qq.com</span>
+                        <button onclick="copyShareEmail()" class="px-3 py-1 bg-amber-100 text-amber-700 rounded-lg text-sm hover:bg-amber-200 transition-colors">
+                            <i class="fas fa-copy mr-1"></i>复制
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-amber-50 rounded-xl p-4">
+                    <h4 class="font-medium text-gray-800 mb-2">📝 投稿格式</h4>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• 邮件标题：【青春笔记投稿】+ 标题</li>
+                        <li>• 正文内容：昵称、分类、标题、正文</li>
+                        <li>• 支持附件：图片、文档等</li>
+                    </ul>
+                </div>
+                
+                <p class="text-center text-gray-400 text-xs mt-4">投稿将在审核后展示</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 投稿弹窗 -->
+    <div id="shareModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full my-8">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">✏️ 我要投稿</h3>
+                <button onclick="closeShareModal()" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-times text-gray-600"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <form id="shareForm" onsubmit="submitShare(event)">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">你的昵称 *</label>
+                            <input type="text" id="shareAuthor" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="请输入昵称">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">分类 *</label>
+                            <select id="shareCategory" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                                <option value="">请选择分类</option>
+                                <option value="大学生活">🎓 大学生活</option>
+                                <option value="专业学习">📚 专业学习</option>
+                                <option value="日常感悟">💭 日常感悟</option>
+                                <option value="旅游经历">🌍 旅游经历</option>
+                                <option value="其他">✨ 其他</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">标题 *</label>
+                            <input type="text" id="shareTitle" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="请输入标题">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">内容 *</label>
+                            <textarea id="shareContent" required rows="6" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="分享你的故事..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">联系方式（可选）</label>
+                            <input type="text" id="shareContact" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="QQ/微信/邮箱，方便我们联系你">
+                        </div>
+                    </div>
+                    <div class="mt-6 flex gap-3">
+                        <button type="button" onclick="closeShareModal()" class="flex-1 py-3 border border-gray-300 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition">取消</button>
+                        <button type="submit" class="flex-1 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition">提交投稿</button>
+                    </div>
+                </form>
+                <p class="text-center text-gray-400 text-xs mt-4">投稿将在管理员审核后展示</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 投稿详情弹窗 -->
+    <div id="shareDetailModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-2xl w-full my-8">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                <h3 id="shareDetailTitle" class="text-xl font-bold text-gray-800">标题</h3>
+                <button onclick="closeShareDetailModal()" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-times text-gray-600"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <span id="shareDetailCategory" class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">分类</span>
+                    <span id="shareDetailDate" class="text-gray-400 text-sm">日期</span>
+                </div>
+                <div class="flex items-center gap-3 mb-6">
+                    <div id="shareDetailAvatar" class="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center text-white font-bold">昵</div>
+                    <span id="shareDetailAuthor" class="text-gray-700 font-medium">作者</span>
+                </div>
+                <div id="shareDetailContent" class="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                    内容
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-primary-600 to-primary-700 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">联系我们</h2>
+                <p class="text-white/80">守望乡野，共育希望</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- 联系方式 -->
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+                    <h3 class="text-xl font-bold mb-6 text-center">联系方式</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center bg-white/10 rounded-xl p-4">
+                            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm text-white/70">项目负责人</div>
+                                <div class="font-medium">李涛</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center bg-white/10 rounded-xl p-4">
+                            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm text-white/70">邮箱</div>
+                                <a href="mailto:227794112@qq.com" class="font-medium hover:text-white/80 transition-colors">227794112@qq.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center bg-white/10 rounded-xl p-4">
+                            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm text-white/70">电话</div>
+                                <div class="font-medium">18297887823</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 抖音主页 -->
+                <a href="https://www.douyin.com/user/MS4wLjABAAAAW7OQHKfGKdgdcPNMLEWX5XNPaw-KcYgcMlG8XSWpDzY9MPbiR44v78sva7mGFT7_" target="_blank" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center card-hover block cursor-pointer">
+                    <div class="w-16 h-16 bg-gray-900 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                        <i class="fab fa-tiktok text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">抖音主页</h3>
+                    <p class="text-white/70 mb-4 text-sm">扫码关注，查看更多精彩内容</p>
+                    <div class="bg-white rounded-xl p-3 inline-block">
+                        <img src="images/douyin-qrcode.jpg" alt="抖音二维码" class="w-32 h-32 object-contain">
+                    </div>
+                    <p class="text-white/60 text-xs mt-3">点击卡片跳转主页 →</p>
+                </a>
+                
+                <!-- 友情赞助 -->
+                <div onclick="openSponsorModal()" class="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center card-hover cursor-pointer">
+                    <div class="w-16 h-16 bg-amber-500 rounded-2xl mx-auto mb-4 flex items-center justify-center">
+                        <i class="fas fa-heart text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">友情赞助</h3>
+                    <p class="text-white/70 mb-4 text-sm">支持乡村教育，助力孩子成长</p>
+                    <div class="bg-white rounded-xl p-3 inline-block">
+                        <img src="images/sponsor-qrcode.jpg" alt="赞助码" class="w-32 h-32 object-contain">
+                    </div>
+                    <p class="text-white/60 text-xs mt-3">点击扫码或复制口令支付</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 赞助弹窗 -->
+    <div id="sponsorModal" class="image-modal" onclick="closeSponsorModal()">
+        <div class="bg-white rounded-2xl p-6 max-w-sm mx-4" onclick="event.stopPropagation()">
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">支持乡村教育</h3>
+                <img src="images/sponsor-qrcode.jpg" alt="赞助码" class="w-48 h-48 object-contain mx-auto mb-4 rounded-xl">
+                <div class="bg-gray-100 rounded-xl p-4 mb-4">
+                    <p class="text-sm text-gray-600 mb-2">支付宝口令码：</p>
+                    <p class="font-mono text-primary-600 font-bold select-all">f:/ZgFEPYV163w</p>
+                    <p class="text-xs text-gray-500 mt-2">长按复制 → 支付宝首页搜索粘贴</p>
+                </div>
+                <button onclick="copySponsorCode()" class="w-full px-4 py-3 bg-primary-500 text-white rounded-xl font-medium hover:bg-primary-600 transition-colors">
+                    <i class="fas fa-copy mr-2"></i>复制口令码
+                </button>
+            </div>
+            <button onclick="closeSponsorModal()" class="absolute top-2 right-4 text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+        </div>
+    </div>
+
+    <!-- FAQ弹窗 -->
+    <div id="faqModal" class="faq-modal fixed inset-0 z-50 items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                <h3 class="text-2xl font-bold text-gray-800">常见问题</h3>
+                <button onclick="toggleFAQ()" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-times text-gray-600"></i>
+                </button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="bg-gray-50 rounded-2xl p-5">
+                    <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                        <span class="w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-sm mr-3">1</span>
+                        如何加入志愿者？
+                    </h4>
+                    <p class="text-gray-600 text-sm leading-relaxed pl-11">扫描页面底部的二维码添加负责人微信，或发送邮件至 227794112@qq.com，注明"志愿者申请+姓名+专业"。我们会定期组织志愿者培训，欢迎所有热心乡村教育的安大同学加入！</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-5">
+                    <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                        <span class="w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-sm mr-3">2</span>
+                        项目如何与乡镇中学对接？
+                    </h4>
+                    <p class="text-gray-600 text-sm leading-relaxed pl-11">我们通过前期调研了解学校需求，设计定制化活动方案，并与校方签订合作协议。目前已在霍邱县临水镇等地建立实践基地，未来计划拓展至3-5所乡镇中学。</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-5">
+                    <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                        <span class="w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-sm mr-3">3</span>
+                        赞助合作流程？
+                    </h4>
+                    <p class="text-gray-600 text-sm leading-relaxed pl-11">欢迎企业、社会组织与我们合作。请发送合作意向至 227794112@qq.com，我们会在3个工作日内回复。合作形式包括：资金支持、物资捐赠、实习岗位提供等。</p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-2xl p-5">
+                    <h4 class="font-bold text-gray-800 mb-3 flex items-center">
+                        <span class="w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-sm mr-3">4</span>
+                        团队成员要求？
+                    </h4>
+                    <p class="text-gray-600 text-sm leading-relaxed pl-11">我们欢迎所有对乡村教育有热情、有责任心的安大在校生。需要具备良好的沟通能力、团队协作精神，能保证每学期至少参与2次活动。有教学、调研、宣传等特长者优先。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加入团队弹窗 -->
+    <div id="memberModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">加入我们</h3>
+                <button onclick="closeMemberModal()" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-times text-gray-600"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold">
+                        李
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-800 mb-1">李涛</h4>
+                    <p class="text-sm text-primary-600">项目负责人</p>
+                </div>
+                
+                <div class="space-y-3">
+                    <a href="mailto:227794112@qq.com" class="flex items-center bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors">
+                        <div class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-envelope text-primary-600"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-500">邮箱</div>
+                            <div class="font-medium text-gray-800">227794112@qq.com</div>
+                        </div>
+                    </a>
+                    
+                    <a href="tel:18297887823" class="flex items-center bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-phone text-green-600"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-gray-500">电话</div>
+                            <div class="font-medium text-gray-800">18297887823</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="mt-6 p-4 bg-primary-50 rounded-xl text-center">
+                    <p class="text-sm text-gray-600">欢迎所有热心乡村教育的安大同学加入！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 赞助码弹窗 -->
+    <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">友情赞助</h3>
+                <button onclick="closeSponsorModal()" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-times text-gray-600"></i>
+                </button>
+            </div>
+            <div class="p-6 text-center">
+                <div class="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-8 mb-4">
+                    <div class="w-48 h-48 bg-white rounded-xl mx-auto flex items-center justify-center border-2 border-dashed border-primary-300">
+                        <div class="text-center">
+                            <i class="fas fa-qrcode text-5xl text-primary-400 mb-2"></i>
+                            <p class="text-sm text-gray-500">赞助二维码</p>
+                            <p class="text-xs text-gray-400">（待上传）</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-gray-600 text-sm mb-2">扫描上方二维码支持我们</p>
+                <p class="text-gray-500 text-xs">或联系：18297887823</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加入我们弹窗 -->
+    <div id="joinModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+                <h3 class="text-xl font-bold text-gray-800">加入我们</h3>
+                <button onclick="closeJoinModal()" class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                    <i class="fas fa-times text-gray-600"></i>
+                </button>
+            </div>
+            <div class="p-6 text-center">
+                <div class="bg-gradient-to-br from-teal-50 to-emerald-100 rounded-2xl p-8 mb-4">
+                    <i class="fas fa-hands-helping text-6xl text-teal-500 mb-4"></i>
+                    <h4 class="text-lg font-bold text-gray-800 mb-2">欢迎加入我们的团队！</h4>
+                    <p class="text-gray-600 text-sm">我们期待志同道合的伙伴一起为乡村教育贡献力量</p>
+                </div>
+                <div class="bg-gray-50 rounded-xl p-4 mb-4">
+                    <p class="text-gray-700 font-medium mb-2">👇 点击下方负责人卡片，快去联系他吧！</p>
+                    <button onclick="closeJoinModal(); setTimeout(() => { document.getElementById('team').scrollIntoView({ behavior: 'smooth' }); }, 300);" class="w-full bg-teal-600 text-white py-3 rounded-xl font-medium hover:bg-teal-700 transition">
+                        <i class="fas fa-user-circle mr-2"></i>查看团队成员
+                    </button>
+                </div>
+                <p class="text-gray-500 text-xs">或直接发送邮件至：227794112@qq.com</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-book-open text-white text-lg"></i>
+                        </div>
+                        <span class="font-bold text-xl">安大乡村教育笔记</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">守望乡野，共育希望。安徽大学学生发展支持项目。</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">快速链接</h4>
+                    <div class="space-y-2 text-sm text-gray-400">
+                        <a href="#progress" class="block hover:text-white transition-colors">项目进展</a>
+                        <a href="#activities" class="block hover:text-white transition-colors">活动纪实</a>
+                        <a href="#team" class="block hover:text-white transition-colors">团队成员</a>
+                        <a href="#contact" class="block hover:text-white transition-colors">联系我们</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">合作伙伴</h4>
+                    <div class="space-y-2 text-sm text-gray-400">
+                        <p>国元证券圆梦计划</p>
+                        <a href="https://www.luan.gov.cn/xxgk/ztzl/ggqsydwei/jy/ptzxx/10264929.html" target="_blank" class="block hover:text-white transition-colors">霍邱县临水镇中心学校</a>
+                        <a href="https://jyj.huangshan.gov.cn/jyxw/xykx/9310718.html" target="_blank" class="block hover:text-white transition-colors">休宁县商山初级中学</a>
+                        <a href="https://v.douyin.com/9KvOFORHK_M/" target="_blank" class="block hover:text-white transition-colors">颍上县三王中学</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4">友情链接</h4>
+                    <div class="space-y-2 text-sm text-gray-400">
+                        <a href="https://www.ahu.edu.cn/" target="_blank" class="block hover:text-white transition-colors">安徽大学官网</a>
+                        <a href="https://xsc.ahu.edu.cn/" target="_blank" class="block hover:text-white transition-colors">安徽大学学生处</a>
+                        <a href="https://ds.ahu.edu.cn/" target="_blank" class="block hover:text-white transition-colors">安徽大学大数据与统计学院</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
+                <p>© 2026 安大乡村教育笔记 · 安徽大学大数据与统计学院</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 成员数据（待编辑区域）
+        const memberData = {
+            litao: {
+                name: '李涛',
+                college: '大数据与统计学院',
+                role: '项目负责人',
+                roleColor: 'primary',
+                intro: '【此处填写李涛的个人介绍】\n\n例如：安徽大学大数据与统计学院2023级本科生，项目发起人，负责项目整体规划与协调工作。',
+                links: [
+                    // { type: 'douyin', url: 'https://www.douyin.com/user/xxx', label: '抖音' },
+                    // { type: 'email', url: 'mailto:litao@ahu.edu.cn', label: '邮箱' }
+                ]
+            },
+            sangruoxi: {
+                name: '桑若曦',
+                college: '大数据与统计学院',
+                role: '',
+                intro: '【待编辑：桑若曦的个人介绍】',
+                links: []
+            },
+            yaochen: {
+                name: '姚晨',
+                college: '大数据与统计学院',
+                role: '',
+                intro: '【待编辑：姚晨的个人介绍】',
+                links: []
+            },
+            liuxinyu: {
+                name: '刘欣玉',
+                college: '大数据与统计学院',
+                role: '',
+                intro: '【待编辑：刘欣玉的个人介绍】',
+                links: []
+            },
+            zhengtianhui: {
+                name: '郑天慧',
+                college: '大数据与统计学院',
+                role: '',
+                intro: '【待编辑：郑天慧的个人介绍】',
+                links: []
+            },
+            zhangxuanyu: {
+                name: '张选宇',
+                college: '大数据与统计学院',
+                role: '',
+                intro: '【待编辑：张选宇的个人介绍】',
+                links: []
+            },
+            wanghanwen: {
+                name: '王瀚文',
+                college: '经济学院',
+                role: '',
+                intro: '【待编辑：王瀚文的的个人介绍】',
+                links: []
+            },
+            jinyi: {
+                name: '金怡',
+                college: '经济学院',
+                role: '',
+                intro: '【待编辑：金怡的个人介绍】',
+                links: []
+            },
+            zhangfan: {
+                name: '张帆',
+                college: '计算机科学与技术学院',
+                role: '',
+                intro: '【待编辑：张帆的个人介绍】',
+                links: []
+            },
+            wangyuanyuan: {
+                name: '王媛媛',
+                college: '外语学院',
+                role: '',
+                intro: '【待编辑：王媛媛的个人介绍】',
+                links: []
+            }
+        };
+        
+        // 显示成员详情
+        function showMember(memberId) {
+            // 显示负责人联系方式弹窗
+            const modal = document.getElementById('memberModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        // 关闭成员详情弹窗
+        function closeMemberModal() {
+            const modal = document.getElementById('memberModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        // 点击弹窗外部关闭成员详情
+        document.getElementById('memberModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMemberModal();
+            }
+        });
+        
+        // 赞助码弹窗
+        function showSponsorModal() {
+            const modal = document.getElementById('sponsorModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeSponsorModal() {
+            const modal = document.getElementById('sponsorModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        document.getElementById('sponsorModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSponsorModal();
+            }
+        });
+        
+        // 投稿联系方式弹窗
+        function openShareContactModal() {
+            const modal = document.getElementById('shareContactModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeShareContactModal() {
+            const modal = document.getElementById('shareContactModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        function copyShareEmail() {
+            const email = '227794112@qq.com';
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(email);
+            } else {
+                const input = document.createElement('input');
+                input.value = email;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+            }
+            alert('邮箱已复制：' + email);
+        }
+        
+        document.getElementById('shareContactModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeShareContactModal();
+            }
+        });
+        
+        // 加入我们弹窗
+        function openJoinModal() {
+            const modal = document.getElementById('joinModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeJoinModal() {
+            const modal = document.getElementById('joinModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        document.getElementById('joinModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeJoinModal();
+            }
+        });
+        
+        // FAQ弹窗
+        function toggleFAQ() {
+            const modal = document.getElementById('faqModal');
+            modal.classList.toggle('active');
+        }
+        
+        // 点击弹窗外部关闭
+        document.getElementById('faqModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                toggleFAQ();
+            }
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+        
+        // ===== 投稿功能 =====
+        let sharePosts = JSON.parse(localStorage.getItem('sharePosts') || '[]');
+        let pendingPosts = JSON.parse(localStorage.getItem('pendingPosts') || '[]');
+        
+        // 示例数据（已审核通过）
+        const samplePosts = [
+            {
+                id: 'sample1',
+                author: '安小旅',
+                category: '旅游经历',
+                title: '黄山日出之旅',
+                content: '凌晨三点出发，只为那一抹破晓的曙光。站在光明顶，看云海翻涌，日出一瞬间，所有的疲惫都值得。这是一次难忘的旅行体验，让我感受到了大自然的壮美。',
+                date: '2026-04-15',
+                status: 'approved'
+            },
+            {
+                id: 'sample2',
+                author: '数据小达人',
+                category: '专业学习',
+                title: '大数据学习心得',
+                content: '从Python基础到机器学习，一路走来磕磕绊绊。分享我的学习路线和一些踩过的坑，希望对学弟学妹有帮助。坚持学习，保持好奇心，是成长的关键。',
+                date: '2026-04-10',
+                status: 'approved'
+            },
+            {
+                id: 'sample3',
+                author: '静水流深',
+                category: '日常感悟',
+                title: '图书馆的午后时光',
+                content: '窗外的梧桐叶又绿了，坐在靠窗的位置，阳光透过树叶洒在书页上，这一刻的宁静，是大学生活最美的馈赠。珍惜每一个安静的午后，享受阅读的美好。',
+                date: '2026-04-08',
+                status: 'approved'
+            }
+        ];
+        
+        // 初始化显示
+        function initSharePosts() {
+            const allPosts = [...sharePosts.filter(p => p.status === 'approved'), ...samplePosts];
+            renderSharePosts(allPosts);
+        }
+        
+        // 渲染投稿列表
+        function renderSharePosts(posts) {
+            const container = document.getElementById('shareList');
+            if (!container) return;
+            
+            const categoryColors = {
+                '大学生活': 'from-green-400 to-emerald-500',
+                '专业学习': 'from-blue-400 to-indigo-500',
+                '日常感悟': 'from-pink-400 to-rose-500',
+                '旅游经历': 'from-amber-400 to-orange-500',
+                '其他': 'from-purple-400 to-violet-500'
+            };
+            
+            const categoryIcons = {
+                '大学生活': 'fa-graduation-cap',
+                '专业学习': 'fa-book-reader',
+                '日常感悟': 'fa-heart',
+                '旅游经历': 'fa-mountain',
+                '其他': 'fa-star'
+            };
+            
+            const categoryBg = {
+                '大学生活': 'bg-green-100 text-green-700',
+                '专业学习': 'bg-blue-100 text-blue-700',
+                '日常感悟': 'bg-pink-100 text-pink-700',
+                '旅游经历': 'bg-amber-100 text-amber-700',
+                '其他': 'bg-purple-100 text-purple-700'
+            };
+            
+            container.innerHTML = posts.map((post, index) => `
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden card-hover cursor-pointer" onclick="showShareDetail(${index})">
+                    <div class="h-40 bg-gradient-to-br ${categoryColors[post.category] || 'from-gray-400 to-gray-500'} flex items-center justify-center">
+                        <i class="fas ${categoryIcons[post.category] || 'fa-file'} text-white text-5xl opacity-80"></i>
+                    </div>
+                    <div class="p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="${categoryBg[post.category] || 'bg-gray-100 text-gray-700'} px-2 py-1 rounded-full text-xs font-medium">${post.category}</span>
+                            <span class="text-gray-400 text-xs">${post.date}</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-2">${post.title}</h3>
+                        <p class="text-gray-600 text-sm line-clamp-3">${post.content.substring(0, 80)}...</p>
+                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white text-xs font-bold">${post.author.charAt(0)}</div>
+                                <span class="text-sm text-gray-600">${post.author}</span>
+                            </div>
+                            <span class="text-teal-600 text-sm hover:text-teal-700 font-medium">阅读全文 →</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 显示投稿详情
+        function showShareDetail(index) {
+            const allPosts = [...sharePosts.filter(p => p.status === 'approved'), ...samplePosts];
+            const post = allPosts[index];
+            if (!post) return;
+            
+            document.getElementById('shareDetailTitle').textContent = post.title;
+            document.getElementById('shareDetailCategory').textContent = post.category;
+            document.getElementById('shareDetailDate').textContent = post.date;
+            document.getElementById('shareDetailAuthor').textContent = post.author;
+            document.getElementById('shareDetailAvatar').textContent = post.author.charAt(0);
+            document.getElementById('shareDetailContent').textContent = post.content;
+            
+            const modal = document.getElementById('shareDetailModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeShareDetailModal() {
+            const modal = document.getElementById('shareDetailModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        // 打开投稿弹窗
+        function openShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+        
+        function closeShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.getElementById('shareForm').reset();
+        }
+        
+        // 提交投稿
+        function submitShare(event) {
+            event.preventDefault();
+            
+            const post = {
+                id: Date.now().toString(),
+                author: document.getElementById('shareAuthor').value,
+                category: document.getElementById('shareCategory').value,
+                title: document.getElementById('shareTitle').value,
+                content: document.getElementById('shareContent').value,
+                contact: document.getElementById('shareContact').value,
+                date: new Date().toISOString().split('T')[0],
+                status: 'pending'
+            };
+            
+            pendingPosts.push(post);
+            localStorage.setItem('pendingPosts', JSON.stringify(pendingPosts));
+            
+            alert('投稿成功！请等待管理员审核。');
+            closeShareModal();
+        }
+        
+        // 点击弹窗外部关闭
+        document.getElementById('shareModal')?.addEventListener('click', function(e) {
+            if (e.target === this) closeShareModal();
+        });
+        document.getElementById('shareDetailModal')?.addEventListener('click', function(e) {
+            if (e.target === this) closeShareDetailModal();
+        });
+        
+        // 从 CONFIG 读取配置数据
+        function loadConfig() {
+            if (typeof CONFIG === 'undefined') return;
+            
+            // 核心数据
+            if (CONFIG.data) {
+                document.getElementById('data-members').textContent = CONFIG.data.members || '1000+';
+                document.getElementById('data-schools').textContent = CONFIG.data.schools || '3';
+                document.getElementById('data-students').textContent = CONFIG.data.students || '320+';
+                document.getElementById('data-hours').textContent = CONFIG.data.hours || '580h';
+                document.getElementById('data-activities').textContent = CONFIG.data.activities || '3';
+            }
+            
+            // 团队成员
+            if (CONFIG.team && memberData) {
+                CONFIG.team.forEach((member, i) => {
+                    const id = member.name.toLowerCase().replace(/[^a-z]/g, '') || 'member' + i;
+                    if (memberData[id]) {
+                        memberData[id].name = member.name;
+                        memberData[id].college = member.college;
+                        memberData[id].intro = member.intro || '【待完善】';
+                        if (member.role) memberData[id].role = member.role;
+                    }
+                });
+            }
+        }
+        
+        // 初始化
+        loadConfig();
+        initSharePosts();
+        
+        // 复制轮播图片实现无缝滚动
+        const scrollContainer = document.getElementById('carouselScroll');
+        if (scrollContainer) {
+            const imgs = scrollContainer.innerHTML;
+            scrollContainer.innerHTML = imgs + imgs; // 复制一份图片
+        }
+        
+        // 图片放大弹窗
+        // 活动剪影轮播切换
+        function scrollCarousel(direction) {
+            const container = document.querySelector('.carousel-scroll-container');
+            const scrollElement = container.querySelector('.carousel-scroll');
+            const scrollAmount = 300; // 每次滚动的像素
+            
+            // 暂停自动滚动动画
+            scrollElement.style.animationPlayState = 'paused';
+            
+            // 手动滚动
+            if (direction === 'left') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+        
+        // 图片放大弹窗
+        function openImageModal(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').classList.add('active');
+        }
+        
+        function closeImageModal() {
+            document.getElementById('imageModal').classList.remove('active');
+        }
+        
+        // 赞助弹窗
+        function openSponsorModal() {
+            document.getElementById('sponsorModal').classList.add('active');
+        }
+        
+        function closeSponsorModal() {
+            document.getElementById('sponsorModal').classList.remove('active');
+        }
+        
+        function copySponsorCode() {
+            const code = 'f:/ZgFEPYV163w';
+            navigator.clipboard.writeText(code).then(() => {
+                alert('口令码已复制！打开支付宝首页搜索粘贴即可支付');
+            }).catch(() => {
+                // 降级方案
+                const input = document.createElement('input');
+                input.value = code;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                alert('口令码已复制！打开支付宝首页搜索粘贴即可支付');
+            });
+        }
+    </script>
+</body>
+</html>
